@@ -1,49 +1,36 @@
-# feature_engineering.py
-
-# PURPOSE:
-# Create features for time-series forecasting and regression models
-
 import pandas as pd
 
 
-def create_time_features(df, date_column):
+# =========================
+# Lag Features (AQI)
+# =========================
+def add_aqi_lags(df, column="mean_aqi", lags=[1, 2, 3]):
     """
-    Extract time-based features from a datetime column
-    """
-    df[date_column] = pd.to_datetime(df[date_column])
-
-    df["year"] = df[date_column].dt.year
-    df["month"] = df[date_column].dt.month
-    df["week"] = df[date_column].dt.isocalendar().week.astype(int)
-    df["day_of_week"] = df[date_column].dt.dayofweek
-
-    return df
-
-
-def create_lag_features(df, target_col, lags=[1, 2, 3]):
-    """
-    Create lag features for time-series models
+    Create lagged AQI features for time-series modeling
     """
     for lag in lags:
-        df[f"{target_col}_lag_{lag}"] = df[target_col].shift(lag)
-
+        df[f"{column}_lag{lag}"] = df[column].shift(lag)
     return df
 
 
-def create_rolling_features(df, target_col, windows=[3, 7]):
+# =========================
+# Date Features
+# =========================
+def add_date_features(df):
     """
-    Create rolling mean features
+    Extract useful time-based features
     """
-    for window in windows:
-        df[f"{target_col}_rolling_mean_{window}"] = (
-            df[target_col].rolling(window=window).mean()
-        )
-
+    if "weekend" in df.columns:
+        df["year"] = df["weekend"].dt.year
+        df["month"] = df["weekend"].dt.month
     return df
 
 
-def drop_na_after_feature_engineering(df):
+# =========================
+# Drop Missing from Lags
+# =========================
+def drop_na_lags(df):
     """
-    Drop NA values created by lag/rolling features
+    Remove rows with NA values created by lagging
     """
     return df.dropna()
