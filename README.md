@@ -1,171 +1,155 @@
 # Air Quality Prediction and Respiratory Health Impact Modeling in California (2020–2024)
 
-## 📌 Overview
+## Overview
 
-This project analyzes air quality trends across California and models their relationship with respiratory health outcomes. By integrating environmental and public health datasets, we develop predictive models to forecast air quality and assess its impact on asthma-related health outcomes.
+This project analyzes air quality trends across California and models their relationship with respiratory health outcomes. By integrating EPA air quality data with California public health records, we develop predictive models to forecast AQI and assess its impact on asthma-related hospitalizations and emergency department visits.
 
----
-
-## 🎯 Objectives
-
-* Forecast future air quality trends using time-series models
-* Quantify the impact of air pollution on respiratory health
-* Compare statistical and machine learning approaches
-* Provide insights for public health and policy decision-making
+**Team:** Alli McKernan, Paola Rodriguez, Vinh Dao
 
 ---
 
-## 📊 Data Sources
+## Objectives
 
-* **EPA Air Quality System (AQS)** – Air pollution data
-* **California Department of Public Health (CDPH)** – Respiratory health outcomes
-
-**Timeframe:** 2020–2024
-
----
-
-## 🧪 Modeling Approach
-
-### 🔹 Model 1: AQI Forecast Model
-
-**Goal:** Forecast future population-weighted statewide AQI
-
-* Dataset: `weekly_statewide_aqi.csv`
-* Models:
-
-  * ARIMA (baseline time-series model)
-  * SARIMA (seasonal model)
-  * Random Forest (using time-based features)
-
-**Outputs:**
-
-* AQI forecasts
-* Evaluation metrics (RMSE, MAE)
+- Forecast future population-weighted statewide AQI using time-series models
+- Quantify the lagged impact of air pollution on asthma-related health outcomes
+- Compare statistical and machine learning approaches
+- Provide insights for public health and policy decision-making
 
 ---
 
-### 🔹 Model 2: Lagged Respiratory Health Impact Model
+## Data Sources
 
-**Goal:** Predict asthma-related health outcomes based on air pollution exposure
+| Source | Description |
+|--------|-------------|
+| [EPA Air Quality System (AQS)](https://www.epa.gov/aqs) | Daily county-level AQI data (2020–2024) |
+| [California Dept. of Public Health (CDPH)](https://www.cdph.ca.gov/) | Asthma hospitalization and ED visit rates by county |
 
-* Dataset: `joint_aqi_health_county.csv`
-* Models:
-
-  * Linear Regression
-  * Random Forest Regression
-  * Gradient Boosting Regression
-
-**Outputs:**
-
-* Predicted health outcomes
-* Model evaluation (R², RMSE, MAE)
+> **Note:** Raw EPA AQS files ( for 2020–2024) must be downloaded separately from the EPA AQS website and placed in . All other data files are included in this repository.
 
 ---
 
-## 📈 Key Results
-
-* **SARIMA** performed best for capturing seasonal AQI trends
-* Random Forest captured non-linear relationships but showed limited R² improvement
-* Air pollution exposure showed measurable relationships with asthma-related outcomes
-
----
-
-## 📁 Repository Structure
+## Repository Structure
 
 ```
-Air-Quality-Project/
-│
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── data_dictionary.md
-│
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   └── 02_modeling.ipynb
-│
-├── src/
-│   ├── data_preprocessing.py
-│   ├── feature_engineering.py
-│   ├── modeling.py
-│   └── evaluation.py
-│
-├── images/
-│   ├── daily_mean_aqi.png
-│   ├── feature_importance.png
-│   └── forecast_model_comparison.png
-│
-├── app/
-│   └── app.py
-│
-├── requirements.txt
-└── README.md
+Air-Quality-Prediction-and-Respiratory-Health-Impact-Modeling-in-California-2020-2024-/
+|
++-- data/
+|   +-- aqs/                          # Raw EPA AQS daily CSVs (download separately)
+|   +-- asthma_hosp_by_county.csv     # Raw CDPH hospitalization data
+|   +-- asthma_ed_by_county.csv       # Raw CDPH ED visit data
+|   +-- asthma_hosp_clean.csv         # Cleaned hospitalization data (generated)
+|   +-- asthma_ed_clean.csv           # Cleaned ED visit data (generated)
+|   +-- weekly_statewide_aqi.csv      # Population-weighted weekly AQI (generated)
+|   +-- weekly_county_aqi.csv         # Weekly AQI by county (generated)
+|   +-- annual_county_aqi.csv         # Annual mean AQI by county (generated)
+|   +-- joint_aqi_health_county.csv   # Merged AQI + health dataset (generated)
+|   +-- aqi_forecast_results.csv      # AQI model forecasts (generated)
+|   +-- aqi_model_metrics.csv         # AQI model evaluation metrics (generated)
+|   +-- health_model_metrics.csv      # Health model evaluation metrics (generated)
+|   +-- health_model_predictions.csv  # Health model predictions (generated)
+|   +-- data_dictionary.md            # Variable descriptions
+|
++-- notebooks/
+|   +-- 01_eda.ipynb                  # Data loading, cleaning, EDA
+|   +-- 02_modeling.ipynb             # Time-series forecasting + health impact models
+|
++-- src/
+|   +-- data_preprocessing.py         # Load, filter, and aggregate AQS/CDPH data
+|   +-- feature_engineering.py        # Lag features and county encoding
+|   +-- modeling.py                   # ARIMA, SARIMA, RF, and regression models
+|   +-- evaluation.py                 # MAE, RMSE, R2 metric helpers
+|   +-- visualization.py              # Reusable plotting functions
+|
++-- app/
+|   +-- app.py                        # Streamlit interactive dashboard
+|
++-- images/
+|   +-- daily_mean_aqi.png
+|   +-- forecast_model_comparison.png
+|   +-- feature_importance.png
+|
++-- requirements.txt
++-- README.md
 ```
 
 ---
 
-## 📊 Visualizations
+## How to Run
 
-### Daily Mean AQI
-
-![Daily Mean AQI](images/daily_mean_aqi.png)
-
-### Forecast Model Comparison
-
-![Forecast Model Comparison](images/forecast_model_comparison.png)
-
----
-
-## ▶️ How to Run
+### Prerequisites
+- Python 3.12+
+- EPA AQS data files in  (see Data Sources above)
 
 ### 1. Clone the repository
-
-```
+```bash
 git clone https://github.com/alligmckernan/Air-Quality-Prediction-and-Respiratory-Health-Impact-Modeling-in-California-2020-2024-.git
-cd Air-Quality-Project
+cd Air-Quality-Prediction-and-Respiratory-Health-Impact-Modeling-in-California-2020-2024-
 ```
 
 ### 2. Install dependencies
-
-```
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run notebooks
+### 3. Run the notebooks (in order)
+```bash
+# Step 1 — EDA and data preprocessing (generates all files in data/)
+jupyter notebook notebooks/01_eda.ipynb
 
-* Open `notebooks/01_eda.ipynb`
-* Open `notebooks/02_modeling.ipynb`
-
-### 4. Run the application (optional)
-
-```
-python app/app.py
+# Step 2 — Modeling (requires outputs from step 1)
+jupyter notebook notebooks/02_modeling.ipynb
 ```
 
----
-
-## 🌐 Interactive Application
-
-An interactive script (`app.py`) is included to explore model outputs and predictions.
-
----
-
-## 📚 Data Dictionary
-
-See `/data/data_dictionary.md` for detailed descriptions of all variables and data sources.
+### 4. Launch the interactive dashboard
+```bash
+streamlit run app/app.py
+```
 
 ---
 
-## 👥 Team Members
+## Modeling Approach
 
-* Alli McKernan
-* Paola Rodriguez
-* Vinh Dao
+### Model 1 — AQI Forecast Model
+Forecasts future population-weighted statewide AQI using weekly time-series data.
+
+| Model | MAE | Notes |
+|-------|-----|-------|
+| ARIMA(1,1,1) | ~18 AQI pts | Baseline; misses seasonal patterns |
+| SARIMA(1,1,1)(1,1,1,52) | ~12 AQI pts | Best performance; captures annual seasonality |
+| Random Forest (lag features) | ~13 AQI pts | Competitive; non-parametric approach |
+
+### Model 2 — Lagged Respiratory Health Impact Model
+Predicts county-level asthma hospitalization and ED visit rates from lagged AQI exposure.
+
+| Model | Hosp R² | ED R² |
+|-------|---------|-------|
+| Linear Regression | — | — |
+| Random Forest | — | — |
+| Gradient Boosting | — | — |
+
+*See  for full results.*
 
 ---
 
-## 📌 Future Work
+## Visualizations
 
-* Incorporate additional environmental variables (e.g., weather, wildfire data)
-* Improve model performance using advanced machine learning techniques
-* Expand analysis beyond California to other regions
+**Daily Mean AQI (2020–2024)**
+
+**AQI Forecast Model Comparison**
+
+**Random Forest Feature Importance**
+
+---
+
+## Data Dictionary
+
+See [](data/data_dictionary.md) for descriptions of all variables and data sources.
+
+---
+
+## Future Work
+
+- Incorporate wildfire smoke and weather variables
+- Expand health outcome targets (COPD, cardiovascular)
+- Improve county-level spatial modeling
+- Deploy dashboard publicly via Streamlit Cloud
