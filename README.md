@@ -112,28 +112,27 @@ streamlit run app/app.py
 ### Model 1 — AQI Forecast Model
 Forecasts future population-weighted statewide AQI using weekly time-series data.
 
-| Model | MAE | Notes |
-|-------|-----|-------|
-| ARIMA(1,1,1) | ~18 AQI pts | Baseline; misses seasonal patterns |
-| SARIMA(1,1,1)(1,1,1,52) | ~12 AQI pts | Best performance; captures annual seasonality |
-| Random Forest (lag features) | ~13 AQI pts | Competitive; non-parametric approach |
+| Model | MAE | RMSE |
+|-------|-----|------|
+| ARIMA(1,1,1) | 17.74 | 21.69 |
+| SARIMA(1,1,1)(1,1,1,52) | 12.20 | 16.05 |
+| Random Forest (lag features) | 12.75 | 16.05 |
 
 ### Model 2 — Lagged Respiratory Health Impact Model
 Predicts county-level asthma hospitalization and ED visit rates from lagged AQI exposure.
 
-| Model | Hosp R² | ED R² |
-|-------|---------|-------|
-| Linear Regression | — | — |
-| Random Forest | — | — |
-| Gradient Boosting | — | — |
-
-*See  for full results.*
+| Model | MAE | RMSE | R² |
+|-------|-----|------|-----|
+| Linear Regression | 0.72 | 0.90 | 0.02 |
+| Random Forest | 0.78 | 1.01 | -0.22 |
+| Gradient Boosting | 0.84 | 1.09 | -0.42 |
 
 ---
 
 ## Visualizations
 
 **Daily Mean AQI (2020–2024)**
+(images/daily_mean_aqi.png)
 
 **AQI Forecast Model Comparison**
 
