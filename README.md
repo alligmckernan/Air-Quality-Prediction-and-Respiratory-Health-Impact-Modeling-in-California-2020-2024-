@@ -132,11 +132,13 @@ Predicts county-level asthma hospitalization and ED visit rates from lagged AQI 
 ## Visualizations
 
 **Daily Mean AQI (2020–2024)**
-(images/daily_mean_aqi.png)
+![Daily Mean AQI (2020–2024)](images/daily_mean_aqi.png)
 
 **AQI Forecast Model Comparison**
+![AQI Forecast Model Comparison](images/forecast_model_comparison.png)
 
 **Random Forest Feature Importance**
+![Random Forest Feature Importance](images/feature_importance.png)
 
 ---
 
